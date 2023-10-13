@@ -1,4 +1,4 @@
-// MAGUTU PH NYARANGO SCT211-0030/2020
+// MAGUTU PH NYARANG'O SCT211-0030/2020
 
 #include <stdio.h>
 #include <stdlib.h>

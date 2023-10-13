@@ -1,0 +1,6 @@
+MAGUTU PH NYARANG'O SCT211-0030/2020
+
+- User-defined signals in Unix-like operating systems allow users to create and send custom signals to processes. 
+- They are identified by integers between 1 and 31. 
+- While common signals like SIGINT (2) or SIGTERM (15) are predefined and widely used, 
+- user-defined signals are not bound to specific meanings and can be utilized creatively

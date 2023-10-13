@@ -1,4 +1,4 @@
-// MAGUTU PH NYARANG0 SCT211-0030/2020
+// MAGUTU PH NYARANG'0 SCT211-0030/2020
 
 #include <stdio.h>
 #include <sys/types.h>
