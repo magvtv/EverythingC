@@ -1,0 +1,18 @@
+MAGUTU PH NYARANGO SCT211-0030/2020
+
+
+
+- wait() and waitpid() are system calls, used to obtain the termination status of child processes in the parent process.
+
+- the wait() system call is a simple way to make a parent process wait for the termination of any of its child processes. 
+- when the parent calls wait(), it suspends its execution until any of its child processes terminate. 
+- the parent retrieves the exit status of the terminated child process. If there are multiple child processes, wait() returns the status of any one of them. 
+- If no child processes exist, wait() returns immediately.
+
+
+- the waitpid() system call is a more versatile alternative to wait(). 
+- it allows the parent process to specify which child process it's waiting for based on the child's process ID (pid). 
+- the parent can also specify options to control the behavior of waitpid(). 
+- waitpid() system call can be used in non-blocking mode, allowing the parent to continue execution if the specified child process is still running. 
+- this feature is useful when the parent process has multiple children and wants to check their statuses.
+
