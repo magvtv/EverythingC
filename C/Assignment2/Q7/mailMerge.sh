@@ -18,9 +18,5 @@ while IFS=, read -r name email; do
     echo "" >> "$temp_email"
     echo "$invitation_content" >> "$temp_email"
 
-    # Send the email using mutt
-    # mutt -s "Invitation to 3rd Year Projects Webinar" "$email" < "$temp_email"
-
-
     rm "$temp_email"
 done < "$csv_file"
