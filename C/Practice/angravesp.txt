@@ -1,0 +1,111 @@
+ANGRAVE GITHUB SHORT NOTES
+
+1. FILE MANAGEMENT
+
+file system is how information is organized in a disk
+Inode (index node) :
+data structure
+represent a file system object
+stores disk attributes and its block locations
+holds metadata information (last accessed, owner, size)
+
+Traditional File Permission:
+644: user can read write execute (rwx), groups (r-x) and other users (r-x) can read execute
+755: user can read write (rw-), groups (r--) and other users (r--) can only read
+
+fflush() = empty buffer that is associated with specified output streams
+
+
+"Everything is a file":
+a UNIX idea that handles input output to and from resources 
+example of such files are directories (documents), processes, sockets, links, hard drives
+modems, keyboard, printers
+inter-process and network communications are simple streams of bytes exposed through the 
+filesystem name space
+set of all UNIX tools, utilities and APIs can be used for input output resources 
+
+Directory Operations:
+ls - list contents on directory
+readdir, opendir, closedir - read directory contents
+rm - removes the inode reference of a given file
+
+POSIX:
+portable operating system interface
+family of standards by IEEE computer society
+for maintaining compatibility between operating systems
+
+CHMOD:
+change the file mode bits
+in form of system call int chmod(const char *path, mode_t mode)
+
+Symbolic Link:
+a text string and a file
+automatically interpreted by the operating system 
+purpose is to point to a file or directory
+by specifying a path thereto
+
+/dev/null
+place to store bits that do not need to be read anymore
+commonly used to discard standard output
+
+File Globbing:
+operation that recognizes the glob patterns
+does file path expansion
+
+act of defining more than one glob pattern
+and yielding files from either inclusive or exclusive matches
+
+2. MEMORY MANAGEMENT
+
+How Operating System loads processes and libraries into memory:
+
+maps the executables and library file contents
+into the process' address space
+
+Virtual Memory:
+storage alloaction scheme
+computer uses the secondary memory 
+compensate for scarcity of physical memory
+
+3. SIGNALS
+Signal:
+construct provided by kernel
+allows processes to send each other 'messages'
+
+Process Signal Dispostion:
+the action that will occur
+once the signal is delivered to the process
+
+Terminology
+
+
+Zombies:
+
+
+SYSTEM CALLS
+
+4. INTERPROCESS COMMUNICATION
+
+Pipe:
+input output channel
+that processes can use to communicate with each other
+
+5. SOCKET PROGRAMMING
+
+6. PROCESSES
+
+Kernel:
+core computer program
+has complete control over the os
+connects and manages its resources
+
+Shell:
+computer program
+has a command-line interface
+provides os services to user and other programs
+allows interaction with kernel
+
+Program:
+set of instructions 
+binary format
+executable by a os or a machine
