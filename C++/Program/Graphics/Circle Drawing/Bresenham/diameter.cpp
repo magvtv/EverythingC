@@ -38,10 +38,24 @@ void BresenhamCircle(int centerX, int centerY, int radius)
     }
 }
 
+void drawDiameter(int centerX, int centerY, int radius)
+{
+    int x1 = centerX - radius;
+    int y1 = centerY;
+    int x2 = centerX + radius;
+    int y2 = centerY;
+
+    glBegin(GL_LINES);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    glVertex2i(x1, x2);
+    glVertex2i(y1, y2);
+    glEnd();
+}
+
 void initOpenGL()
 {
     glfwInit();
-    window = glfwCreateWindow(800, 600, "Bresenham\'s Red Circle", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "Red Circle and Black Diameter", NULL, NULL);
     glfwMakeContextCurrent(window);
 }
 
@@ -49,16 +63,18 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(1.0f, 0.0f, 0.0f);
-    BresenhamCircle(300, 300, 400);
-    glFlush();
+    BresenhamCircle(300, 300, 400); // center of (300, 300) radius of 400
+    drawDiameter(300, 300, 400);
+    glfwSwapBuffers(window);
 }
 
-int main () {
+int main()
+{
     initOpenGL();
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window))
+    {
         display();
-        glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
