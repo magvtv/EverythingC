@@ -70,7 +70,7 @@ int main(int argc, char **argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(800, 600);
     glutInitWindowPosition(100, 100);
-    glutCreateWindow("Midpoint Circle Algorithm");
+    glutCreateWindow("Midpoint Circle Algorithm & Black Diameter ");
 
     init();
     glutDisplayFunc(display);
