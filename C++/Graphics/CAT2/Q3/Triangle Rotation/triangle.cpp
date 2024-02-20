@@ -1,0 +1,115 @@
+#include <GL/glut.h>
+#include <iostream>
+#include <cmath>
+
+// the triangle and square corners
+float triangle[3][2] = {
+    {-2.0f, -2.0f},
+    {2.0f, -2.0f},
+    {0.0f, 3.0f}};
+
+float square[4][2] = {
+    {-2.0f, -2.0f},
+    {-2.0f, 2.0f},
+    {2.0f, 2.0f},
+    {2.0f, -2.0f}};
+
+// function for the dotted red lines
+void drawDottedLine(float x1, float y1, float x2, float y2)
+{
+    glLineStipple(1, 0xAAAA);
+    glEnable(GL_LINE_STIPPLE);
+    glBegin(GL_LINES);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
+    glEnd();
+    glDisable(GL_LINE_STIPPLE);
+}
+
+// drawing triangle and square
+void drawTriangle()
+{
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glBegin(GL_TRIANGLES);
+    for (int i = 0; i < 3; ++i)
+    {
+        glVertex2f(triangle[i][0], triangle[i][1]);
+    }
+    glEnd();
+}
+
+void drawSquare()
+{
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 4; ++i)
+    {
+        glVertex2f(square[i][0], square[i][1]);
+    }
+    glEnd();
+}
+
+// the rotating functions to rotate the points (x, y) around (ox, oy) by 48°
+void RotatePoint(float &x, float &y, float ox, float oy, float angle)
+{
+    float radians = angle * (M_PI / 180.0f);
+    float xNew = (((x - ox) * cos(radians)) - ((y - oy) * sin(radians))) + ox;
+    float yNew = (((x - ox) * sin(radians)) - ((y - oy) * cos(radians))) + oy;
+    x = xNew;
+    y = yNew;
+}
+
+// implement the rotate function on the triangle
+void RotateTriangle(float angle)
+{
+    float centerX = 0.0f;
+    float centerY = 0.0f;
+    for (int i = 0; i < 3; ++i)
+    {
+        RotatePoint(triangle[i][0], triangle[i][1], centerX, centerY, angle);
+    }
+}
+
+// show the graphics
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    drawDottedLine(-2.0f, -2.0f, -2.0f, 2.0f);
+    drawDottedLine(-2.0f, 2.0f, 2.0f, 2.0f);
+    drawDottedLine(2.0f, 2.0f, 2.0f, -2.0f);
+    drawDottedLine(2.0f, -2.0f, -2.0f, -2.0f);
+
+    glPushMatrix();
+    RotateTriangle(48.0f);
+    drawTriangle();
+    glPopMatrix();
+    glFlush();
+}
+
+// initializing the opengl settings
+void init()
+{
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-5, 5, -5, 5);
+}
+
+int main(int argc, char **argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(800, 600);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Triangle 48° Rotation");
+
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+
+    return 0;
+}
