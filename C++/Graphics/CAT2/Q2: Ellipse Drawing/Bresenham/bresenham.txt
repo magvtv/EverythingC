@@ -63,7 +63,7 @@ void initOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(-6, 6, -6, 6); // setting the co-ordinate system
+    gluOrtho2D(-6, 6, -6, 6);
 }
 
 // display the graphics rendered by the bresenham ellipse algorithm
@@ -71,7 +71,7 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0f, 1.0f, 0.0f);  // set the color to green
-    BresenhamEllipse(0, 0, 5, 3); // center (0, 0) with rx = 5 and ry = 3
+    BresenhamEllipse(0, 0, 5, 3); // cener (0, 0) with rx = 5 and ry = 3
     glFlush();
 }
 
