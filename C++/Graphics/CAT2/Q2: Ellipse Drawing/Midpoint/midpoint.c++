@@ -1,89 +1,89 @@
-#include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include <iostream>
-#include <vector>
 #include <cmath>
 
-GLFWwindow *window;
-
-void drawSymmerticPoints(int x, int y)
+void drawSymmerticPoints(int x, int y, int cx, int cy)
 {
     glBegin(GL_POINTS);
-    glVertex2i(x, y);
-    glVertex2i(-x, y);
-    glVertex2i(x, -y);
-    glVertex2i(-x, -y);
+    glVertex2i(cx + x, cy + y);
+    glVertex2i(cx - x, cy + y);
+    glVertex2i(cx + x, cy - y);
+    glVertex2i(cx - x, cy - y);
     glEnd();
 }
 
-void BresenhamEllipse(int a, int b)
+void MidpointEllipse(int cx, int cy, int rx, int ry)
 {
-    float d2;
-    int x = 0;
-    int y = b;
+    float x = 0, y = ry;
+    float dx = 0, dy = (2 * pow(rx, 2) * ry);
 
-    float d1 = (b * b) - (a * a * b) + (0.25 * a * a);
-    drawSymmerticPoints(x, y);
+    // initial 1st region parameter
+    float d1 = (pow(ry, 2) - (pow(rx, 2) * ry) + (0.25 * pow(rx, 2)));
 
-    // 1st Region
-    while ((pow(a, 2) * (y - 0.5)) > (pow(b, 2) * (x + 1)))
+    while (dx < dy)
     {
+        drawSymmerticPoints(x, y, cx, cy);
+        x++;
+        dx += (2 * pow(ry, 2));
         if (d1 < 0)
         {
-            d1 += (pow(b, 2) * ((2 * x) + 3));
+            d1 += (dx + pow(ry, 2));
         }
         else
         {
-            d1 += (pow(b, 2) * ((2 * x) + 3) + (pow(a, 2) * ((-2 * y) + 2)));
             y--;
+            dy -= 2 * pow(rx, 2);
+            d1 += dx - dy + pow(ry, 2);
         }
-
-        x++;
-        drawSymmerticPoints(x, y);
     }
 
-    // 2nd Region
-    d2 = (pow(b, 2) * pow((x + 0.5), 2)) + (pow(a, 2) * pow((y - 1), 2)) - (pow(a, 2) * pow(b, 2));
-    while (y > 0)
+    float d2 = (pow(ry, 2) * pow((x + 0.25), 2) + (pow(rx, 2) * pow((y - 1), 2) - (pow(rx, 2) * pow(ry, 2))));
+
+    while (y >= 0)
     {
-        if (d2 < 0)
+        drawSymmerticPoints(x, y, cx, cy);
+        y--;
+        dy -= 2 * pow(rx, 2);
+        if (d2 > 0)
         {
-            d2 += (pow(b, 2) * ((2 * x) + 2)) + (pow(a, 2) * ((-2 * y) + 3));
-            x++;
+            d2 += pow(rx, 2) - dy;
         }
         else
         {
-            d2 += (pow(a, 2) * ((-2 * y) + 3));
+            x++;
+            dx += 2 * pow(ry, 2);
+            d2 += dx - dy + pow(rx, 2);
         }
-        y--;
-        drawSymmerticPoints(x, y)
     }
 }
 
 void initOpenGL()
 {
-    glfwInit();
-    window = glfwCreateWindow(1000, 800, "MidPoint Ellipse", NULL, NULL);
-    glfwMakeContextCurrent(window);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-6, 6, -6, 6);
 }
 
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0f, 1.0f, 0.0f);
-    BresenhamEllipse(200, 100);
-    glfwSwapBuffers(window);
+    MidpointEllipse(0, 0, 5, 3);
+    glFlush();
 }
 
-int main()
+int main(int argc, char **argv)
 {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(800, 600);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("MidPoint Ellipse Algorithm");
+
     initOpenGL();
 
-    while (!glfwWindowShouldClose(window))
-    {
-        display();
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
+    glutDisplayFunc(display);
+    glutMainLoop();
     return 0;
 }
