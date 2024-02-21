@@ -1,90 +1,84 @@
-#include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include <iostream>
-#include <vector>
 #include <cmath>
 
-GLFWwindow *window;
-
-void drawSymmerticPoints(int x, int y)
+void drawSymmerticPoints(int x, int y, int cx, int cy)
 {
     glBegin(GL_POINTS);
-    glVertex2i(x, y);
-    glVertex2i(-x, y);
-    glVertex2i(x, -y);
-    glVertex2i(-x, -y);
+    glVertex2i(cx + x, cy + y);
+    glVertex2i(cx - x, cy + y);
+    glVertex2i(cx + x, cy - y);
+    glVertex2i(cx - x, cy - y);
     glEnd();
 }
 
-void BresenhamEllipse(int a, int b)
+void BresenhamEllipse(int cx, int cy, int rx, int ry)
 {
-    int x = 0;
-    int y = b;
-    double d1 = (pow(b, 2) - (pow(a, 2) * b) + (0.25 * pow(a, 2)));
-    int dx = 2 * pow(a, 2) * x;
-    int dy = 2 * pow(b, 2) * y;
+    float x = 0, y = ry;
+    float dx = 0, dy = (2 * pow(rx, 2) * y);
+    float d = (pow(ry, 2) - (pow(rx, 2) * ry) + (0.25 * pow(rx, 2)));
 
     while (dx < dy)
     {
-        drawSymmerticPoints(x, y);
+        drawSymmerticPoints(x, y, cx, cy);
         x++;
-        dx = 2 * pow(b, 2);
-
-        if (d1 < 0)
+        dx += 2 * pow(ry, 2);
+        if (d < 0)
         {
-            d1 += dx + pow(b, 2);
+            d += dx + pow(ry, 2);
         }
         else
         {
             y--;
-            dy -= 2 * pow(b, 2);
-            d1 += (dx + pow(b, 2)) - dy;
+            dy -= 2 * pow(rx, 2);
+            d += dx - dy + pow(ry, 2);
         }
     }
 
-    double d2 = (pow(b, 2) * pow((x + 0.25), 2)) + (pow(a, 2) * pow((y - 1), 2)) - (pow(a, 2) * pow(b, 2));
+    d = (pow(ry, 2) * pow((x + 0.5), 2)) + (pow(rx, 2) * pow((y - 1), 2)) - (pow(rx, 2) * pow(ry, 2));
     while (y >= 0)
     {
-        drawSymmerticPoints(x, y);
         y--;
-        dy -= (2 * pow(a, 2));
-        if (d2 > 0)
+        dy -= 2 * pow(rx, 2);
+        if (d > 0)
         {
-            d2 += (pow(a, 2) - dy)
+            d += pow(rx, 2) - dy;
         }
         else
         {
-            x++;
-            dx += (2 * pow(b, 2));
-            d2 += ((pow(a, 2) - dy) + dx);
+            dx += 2 * pow(ry, 2);
+            d += dx - dy + pow(rx, 2);
         }
     }
 }
 
 void initOpenGL()
 {
-    glfwInit();
-    window = glfwCreateWindow(800, 1000, "Breseham Ellipse", NULL, NULL);
-    glfwMakeContextCurrent(window);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-6, 6, -6, 6);
 }
 
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0f, 1.0f, 0.0f);
-    BresenhamEllipse(200, 100);
-    glfwSwapBuffers(window);
+    BresenhamEllipse(0, 0, 5, 3);
+    glFlush();
 }
 
-int main()
+int main(int argc, char **argv)
 {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(800, 600);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Bresenham Ellipse Algorithm");
+
     initOpenGL();
 
-    while (!glfwWindowShouldClose(window))
-    {
-        display();
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
+    glutDisplayFunc(display);
+    glutMainLoop();
     return 0;
 }
