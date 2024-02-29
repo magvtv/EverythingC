@@ -9,7 +9,7 @@ def create_equilateral_triangle(name, scale, origin=Vec(0, 0, 0)):
     vertices = [
         origin + Vec((0, 0, 0)),
         origin + Vec((scale, 0, 0)),
-        origin + Vec(((0.5 * scale), (scale * triangle), 0))
+        origin + Vec(((0.5 * scale), (scale * triangle_edge_top), 0))
     ]
     
     edges = []
