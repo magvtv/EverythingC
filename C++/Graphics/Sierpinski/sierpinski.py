@@ -32,16 +32,16 @@ def copy_cat_triangle(obj, suffix, transform):
 
 
 def main():
-    repeat = 3
+    levels = 3
     size = 10
-    unit_measure = pow((0.5 * size), repeat)
+    unit_measure = pow((0.5 * size), levels)
     merge_threshold = unit_measure * 0.5
     
     cursor = bpy.context.scene.cursor.location
     offset = cursor + Vec((-size / 2), (-size * triangle_edge_center / 2), 0)
     triangle = triangle("Triangle", unit_measure, offset)
     
-    for x in range(repeat):
+    for x in range(levels):
         base = pow(2, x)                            # set base transform
         triangle = bpy.data.object["Triangle"]      # set triangle
         triangle_x = copy_cat_triangle(triangle, '-X', Vec(unit_measure * base, 0, 0))
