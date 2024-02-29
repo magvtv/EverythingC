@@ -5,7 +5,7 @@ from mathutils import Vector as Vec
 triangle_edge_top = math.sqrt(3) / 2        #triangle_h
 triangle_edge_center = math.sqrt(3) / 3     #triangle_c
 
-def create_equilateral_triangle(name, scale, origin=Vec(0, 0, 0)):
+def create_equilateral_triangle(name, scale, origin=Vec((0, 0, 0))):
     vertices = [
         origin + Vec((0, 0, 0)),
         origin + Vec((scale, 0, 0)),
