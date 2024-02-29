@@ -20,7 +20,7 @@ def create_equilateral_triangle(name, scale, origin=Vec((0, 0, 0))):
     obj = bpy.data.objects.new(name, mesh)          # creating new object
     mesh.from_pydata(vertices, edges, faces)        # making mesh with shape components
     mesh.update()                                   # show name, update the mesh
-    bpy.context.collection.objects.link(obj)         # link object to active collection
+    bpy.context.collection.objects.link(obj)        # link object to active collection
     return obj
 
 
@@ -58,6 +58,8 @@ def main():
         bpy.mesh.select_all(action='SELECT')
         bpy.ops.mesh.remove_doubles(threshold=merge_threshold)
         bpy.ops.object.mode_set(mode='OBJECT')
+        
+    clear_extra_vertices()
         
 if __name__ =='__main__':
     main()
