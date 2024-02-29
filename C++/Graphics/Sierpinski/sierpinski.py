@@ -20,7 +20,7 @@ def create_equilateral_triangle(name, scale, origin=Vec((0, 0, 0))):
     obj = bpy.data.objects.new(name, mesh)          # creating new object
     mesh.from_pydata(vertices, edges, faces)        # making mesh with shape components
     mesh.update()                                   # show name, update the mesh
-    bpy.context.collection.object.link(obj)         # link object to active collection
+    bpy.context.collection.objects.link(obj)         # link object to active collection
     return obj
 
 
@@ -38,12 +38,12 @@ def main():
     merge_threshold = unit_measure * 0.5
     
     cursor = bpy.context.scene.cursor.location
-    offset = cursor + Vec((-size / 2), (-size * triangle_edge_center / 2), 0)
-    triangle = triangle("Triangle", unit_measure, offset)
+    offset = cursor + Vec(((-size / 2), (-size * triangle_edge_center / 2), 0))     #
+    triangle = create_equilateral_triangle("Sierpinski Triangle", unit_measure, offset)                     #create start triangle
     
     for x in range(levels):
         base = pow(2, x)                            # set base transform
-        triangle = bpy.data.object["Triangle"]      # set triangle
+        triangle = bpy.data.object["Sierpinski Triangle"]      # set triangle
         triangle_x = copy_cat_triangle(triangle, '-X', Vec(unit_measure * base, 0, 0))
         triangle_x.select_set(state=True)
         triangle_t = copy_cat_triangle(triangle, '-T', Vec(((base * unit_measure) * 0.5), (base * unit_measure * triangle_edge_top), 0))
