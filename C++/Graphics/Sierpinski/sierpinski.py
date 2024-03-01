@@ -43,10 +43,10 @@ def main():
     
     for x in range(levels):
         base = pow(2, x)                            # set base transform
-        triangle = bpy.data.object["Sierpinski Triangle"]      # set triangle
-        triangle_x = copy_cat_triangle(triangle, '-X', Vec(unit_measure * base, 0, 0))
+        triangle = bpy.data.objects["Sierpinski Triangle"]      # set triangle
+        triangle_x = copy_cat_triangle(triangle, '-X', Vec((unit_measure * base, 0, 0)))
         triangle_x.select_set(state=True)
-        triangle_t = copy_cat_triangle(triangle, '-T', Vec(((base * unit_measure) * 0.5), (base * unit_measure * triangle_edge_top), 0))
+        triangle_t = copy_cat_triangle(triangle, '-T', Vec(((base * unit_measure * 0.5), (base * unit_measure * triangle_edge_top), 0)))
         triangle_t.select_set(state=True)
         
         triangle.select_set(state=True)
