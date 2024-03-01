@@ -3,8 +3,16 @@ import math
 from mathutils import Vector
 
 # pre-calculated proportions
-tri_h = math.sqrt(3) / 2  # edge to top
-tri_c = math.sqrt(3) / 3  # edge to center
+triangle_edge_top = math.sqrt(3) / 2  # edge to top
+triangle_edge_center = math.sqrt(3) / 3  # edge to center
+tri_colors = [
+    '#7DDF64',
+    '#8EE3EF',
+    '#BCBD8B',
+    '#FAC748',
+    
+]
+
 
 
 # triangle function
@@ -13,7 +21,7 @@ def create_equilateral_triangle(name, scale, origin=Vector((0, 0, 0))):
     coords = [
         origin + Vector((0, 0, 0)),
         origin + Vector((scale, 0, 0)),
-        origin + Vector((scale / 2, scale * tri_h, 0))
+        origin + Vector((scale / 2, scale * triangle_edge_top, 0))
     ]
     edges = [
     ]
@@ -94,7 +102,7 @@ def main():
 
     # offset 3d cursor
     cursor = bpy.context.scene.cursor.location
-    offset = cursor + Vector((-size / 2, -size * tri_c / 2, 0))
+    offset = cursor + Vector((-size / 2, -size * triangle_edge_center / 2, 0))
 
     # create base triangle
     triangle = create_equilateral_triangle('Sierpinski Triangle', unit, offset)
@@ -113,7 +121,7 @@ def main():
         triangle_x.select_set(state=True)
 
         # duplicate/move the "object" on triangle direction
-        triangle_t = copy_cat_triangle(triangle, '-T', Vector((base * unit / 2, base * unit * tri_h, 0)))
+        triangle_t = copy_cat_triangle(triangle, '-T', Vector((base * unit / 2, base * unit * triangle_edge_top, 0)))
         triangle_t.select_set(state=True)
 
         # join all objects as "object"
