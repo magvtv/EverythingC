@@ -29,6 +29,22 @@ void hexToRGB(std::string hex, float &r, float &g, float &b)
     g = std::stoi(hex.substr(5, 6), nullptr, 16) / 255.0f;
 }
 
+void grenierHormann(float &x, float &y, float &scale)
+{
+    std::vector<std::pair<float, float>> vertices = {{10.0f, 0.0f, 0.0f}, {0.0f, 17.32f}, {10.0f, 0.0f}};
+
+    for (int i = 0; i < vertices.size(); ++i)
+    {
+        float ix = vertices[i].first;
+        float iy = vertices[i].second;
+
+        // check if vertex is outside the viewing region
+        if (ix < -10.0f)
+        {
+        }
+    }
+}
+
 // function to draw the sierpinski with custom colors
 void drawTheSierpinski()
 {
