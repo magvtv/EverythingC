@@ -32,7 +32,7 @@ def copy_cat_triangle(obj, suffix, transform):
 
 
 def main():
-    levels = 3
+    levels = 8
     size = 10
     unit_measure = pow((0.5 * size), levels)
     merge_threshold = unit_measure * 0.5
