@@ -29,6 +29,48 @@ void hexToRGB(std::string hex, float &r, float &g, float &b)
     g = std::stoi(hex.substr(5, 6), nullptr, 16) / 255.0f;
 }
 
+void grenierHormann(float &x, float &y, float &scale)
+{
+    std::vector<std::pair<float, float>> vertices = {{10.0f, 0.0f, 0.0f}, {0.0f, 17.32f}, {10.0f, 0.0f}};
+
+    for (int i = 0; i < vertices.size(); ++i)
+    {
+        float ix = vertices[i].first;
+        float iy = vertices[i].second;
+
+        // check if vertex is outside the viewing region
+        if (ix < -10.0f)
+        {
+            float dx = -10.0f - ix;
+            float dy = dx * (iy - vertices[(i + 1) % vertices.size()].second) / (ix - vertices[(i + 1) % vertices.size()].first);
+            ix = -10.0f;
+            iy += dy;
+        }
+        else if
+        {
+            float dx = 10.0f - ix;
+            float dy = dx * (vertices[(i + 1) % vertices.size()].second - iy) / (vertices[(i + 1) % vertices.size()].first - ix);
+            ix = 10.0f;
+            iy += dy;
+        }
+
+        // update the vertex co-ordinates
+        vertices[i].first = ix;
+        vertices[i].second = iy
+    }
+
+    // calculate the new scale based on the newly clipped vertices
+    float minX = std::min(vertices[0].first, std::min(vertices[1].first, vertices[2].first));
+    float maxX = std::max(vertices[0].first, std::min(vertices[1].first, vertices[2].first));
+    float minY = std::min(vertices[0].second, std::min(vertices[1].second, vertices[2].second));
+    float maxY = std::min(vertices[0].second, std::min(vertices[1].second, vertices[2].second));
+
+    // update the minimum position and scale of the triangle
+    x = minX;
+    y = minY;
+    scale = maxX - minX;
+}
+
 // function to draw the sierpinski with custom colors
 void drawTheSierpinski()
 {
@@ -42,7 +84,7 @@ void drawTheSierpinski()
         float r, g, b;
         hexToRGB(colors[i], r, g, b);
         glColor3f(r, g, b);
-
+        grenierHormann(x, y, scale);
         // initialize the triangle
         drawEquilateralTriangle(x, y, scale);
         x += scale / 2.0f;

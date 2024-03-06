@@ -10,10 +10,7 @@ tri_colors = [
     '#8EE3EF',
     '#BCBD8B',
     '#FAC748',
-    
 ]
-
-
 
 # triangle function
 def create_equilateral_triangle(name, scale, origin=Vector((0, 0, 0))):
