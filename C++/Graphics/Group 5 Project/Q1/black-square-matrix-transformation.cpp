@@ -12,7 +12,7 @@ public:
         angle = 0.0f;
     }
 
-    // function to initialize the opengl
+    // member function to initialize the opengl
     void init()
     {
         // set the background color to white
@@ -24,7 +24,7 @@ public:
         glLoadIdentity();
     }
 
-    // function to draw the black square
+    // member function to draw the black square
     void drawBlackSquare()
     {
         // set the square color to black
@@ -37,7 +37,7 @@ public:
         glEnd();
     }
 
-    // function to handle the rendering
+    // member function to handle the rendering
     void display()
     {
         glClear(GL_COLOR_BUFFER_BIT);
@@ -48,7 +48,7 @@ public:
         glutSwapBuffers();
     }
 
-    // function handling the animation
+    // member function handling the animation
     void animate(int value)
     {
         angle += 1.0f;
@@ -75,8 +75,8 @@ int main(int argc, char **argv)
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutCreateWindow("Black Square Animation");
     animation.init();
-    glutDisplayFunc(display);
-    glutTimerFunc(0, animate, 0);
+    glutDisplayFunc(animation.display);
+    glutTimerFunc(0, animation.animate, 0);
     glutMainLoop();
     return 0;
 }
