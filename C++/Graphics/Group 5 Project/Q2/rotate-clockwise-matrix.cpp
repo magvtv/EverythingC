@@ -17,7 +17,7 @@ public:
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glMatrixMode(GL_PROJECTION);
-        gluOrtho(-50.0, 50.0, -50.0, 50.0, -1.0, 1.0);
+        glOrtho(-50.0, 50.0, -50.0, 50.0, -1.0, 1.0);
     }
 
     // function to draw the square
@@ -63,7 +63,7 @@ public:
 }
 
 // initialize the SquareAnimation object
-SquareAnimation squareAnimate(0, 0, 30, 1.0f)
+SquareAnimation squareAnimation(0, 0, 30, 1.0f)
 
     // display callback function
     void display()
