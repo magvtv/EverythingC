@@ -51,12 +51,12 @@ public:
 }
 
 // initialize SquareAnimation object 'squareAnimation'
-SquareAnimation squareAnimation(0, 0, 30, 1.0f);
+SquareAnimation squareAnimate(0, 0, 30, 1.0f);
 
 // display callback function
 void display()
 {
-    squareAnimation.display();
+    squareAnimate.display();
 }
 // initialize SquareAnimation object 'squareAnimation'
 SquareAnimation squareAnimate(0, 0, 30, 1.0f);
@@ -73,25 +73,10 @@ void update(int value)
     squareAnimate.update(value);
 }
 
-int main(int argc, char **argv)
-{
-    glutInit(&argc, argv); // initialize glut
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(500, 500);
-    glutInitWindowPosition(100, 100);
-    glutCreateWindow("Pulse Effect Square Animation (Geometric Transformation)");
-    squareAnimate.initialize(); // initialize opengl
-
-    glutDisplayFunc(display);
-    glutTimerFunc(0, update, 0);
-
-    glutMainLoop();
-    return 0;
-}
 // timer callback function for animation
 void update(int value)
 {
-    squareAnimation.update(value);
+    squareAnimate.update(value);
 }
 
 int main(int argc, char **argv)
@@ -101,7 +86,7 @@ int main(int argc, char **argv)
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Pulse Effect Square Animation (Matrix Transformation)");
-    squareAnimation.initialize(); // initialize opengl
+    squareAnimate.initialize(); // initialize opengl
 
     glutDisplayFunc(display);
     glutTimerFunc(0, update, 0);
