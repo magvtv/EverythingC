@@ -61,21 +61,35 @@ public:
         drawSquare(newX, newY); // draw the scaled square at the new position
         glFlush();
     }
+
+    void display()
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        glTranslatef(centerX, centerY, 0.0f);
+        glRotatef(angle, 0.0f, 0.0f, 1.0f);
+        glTranslatef(radius, 0.0f, 0.0f);
+
+        drawSquare();
+        glFlush();
+    }
 }
 
 // initialize SquareAnimation object 'squareAnimation'
-SquareAnimation squareAnimate(0, 0, 30, 1.0f);
+SquareAnimation squareAnimation(0, 0, 30, 1.0f);
 
 // display callback function
 void display()
 {
-    squareAnimate.display();
+    squareAnimation.display();
 }
 
 // timer callback function for animation
 void update(int value)
 {
-    squareAnimate.update(value);
+    squareAnimation.update(value);
 }
 
 int main(int argc, char **argv)
@@ -85,7 +99,7 @@ int main(int argc, char **argv)
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Pulse Effect Square Animation (Geometric Transformation)");
-    squareAnimate.initialize(); // initialize opengl
+    squareAnimation.initialize(); // initialize opengl
 
     glutDisplayFunc(display);
     glutTimerFunc(0, update, 0);
