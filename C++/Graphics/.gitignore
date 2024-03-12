@@ -2,6 +2,6 @@ CMakeFiles/
 CMakeCache.txt
 ./vscode
 /Blender Sierpinski/Blender Sierpinski.zip
-/Group 5 Project/Q1/TextFiles/
-/Group 5 Project/Q2/TextFiles/
-/Group 5 Project/Q3/TextFiles/
+/Group 5 Project/Q1/TextFiles*
+/Group 5 Project/Q2/TextFiles*
+/Group 5 Project/Q3/TextFiles*
