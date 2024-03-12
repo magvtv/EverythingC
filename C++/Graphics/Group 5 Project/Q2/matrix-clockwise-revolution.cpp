@@ -63,10 +63,10 @@ public:
 }
 
 // initialize the SquareAnimation object
-SquareAnimation squareAnimation(0, 0, 30, 1.0f)
+SquareAnimation squareAnimate(0, 0, 30, 1.0f);
 
-    // display callback function
-    void display()
+// display callback function
+void display()
 {
     squareAnimate.display()
 }
