@@ -6,6 +6,9 @@ const float SQUARE_SIZE = 50.0f;
 
 class OpenGLAnimation
 {
+private:
+    float angle;
+
 public:
     OpenGLAnimation()
     {
@@ -60,21 +63,18 @@ public:
         glutPostRedisplay();
         glutTimerFunc(16, animate, 0);
     }
-
-private:
-    float angle;
-}
+};
 
 // global open gl animation object
-OpenGLAnimation animation;
 
 int main(int argc, char **argv)
 {
+    OpenGLAnimation animation;
+    animation.init();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutCreateWindow("Black Square Animation");
-    animation.init();
     glutDisplayFunc(animation.display);
     glutTimerFunc(0, animation.animate, 0);
     glutMainLoop();
