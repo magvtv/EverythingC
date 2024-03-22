@@ -63,18 +63,18 @@ public:
 }
 
 // initialize the SquareAnimation object
-SquareAnimation squareAnimate(0, 0, 30, 1.0f);
+SquareAnimation SquareAnimation(0, 0, 30, 1.0f);
 
 // display callback function
 void display()
 {
-    squareAnimate.display()
+    SquareAnimation.display()
 }
 
 // timer callback function for animation
 void update(int value)
 {
-    squareAnimate.update(value)
+    SquareAnimation.update(value)
 }
 
 int main(int argc, char **argv)
@@ -84,9 +84,9 @@ int main(int argc, char **argv)
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Square Animation (Matrix Transformation)");
-    squareAnimate.initialize();  // initialize opengl
-    glutDisplayFunc(display);    // set display callback function
-    glutTimerFunc(0, update, 0); // immediately start animation timer
-    glutMainLoop();              // enter glut event processing loop
+    SquareAnimation.initialize(); // initialize opengl
+    glutDisplayFunc(display);     // set display callback function
+    glutTimerFunc(0, update, 0);  // immediately start animation timer
+    glutMainLoop();               // enter glut event processing loop
     return 0;
 }
