@@ -42,41 +42,54 @@ public:
 
         if (pulse)
         {
-            pulseFactor = 1.0f - (angle / 360.0f) * 0.5f;
+            pulseFactor = 0.5f * (1.0f - (angle / 360.0f));
         }
 
-        glutPostRedisplay();          // request a redraw
-        glutTimerFunc(30, update, 0); // recursive call animation
+        glutPostRedisplay(); // request a redraw
+    }
+
+    void display()
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glTranslatef(centerX, centerY, 0.0f);
+        glRotatef(angle, 0.0f, 0.0f, 1.0f);
+        drawSquare();
+        glFlush();
+    }
+
+    static void updateWrapper(int value)
+    {
+        SquareAnimation *instance = static_cast<SquareAnimation *>(glutGetWindow());
+        if (instance)
+        {
+            instance->update();
+            glutTimerFunc(30, updateWrapper, 0)
+        }
+        squareAnimation.display();
     }
 }
 
 // initialize SquareAnimation object 'squareAnimation'
-SquareAnimation SquareAnimation(0, 0, 30, 1.0f);
+SquareAnimation squareAnimation(0, 0, 30, 1.0f);
 
 // display callback function
 void display()
 {
-    SquareAnimation.display();
-}
-// initialize SquareAnimation object 'squareAnimation'
-SquareAnimation SquareAnimation(0, 0, 30, 1.0f);
 
-// display callback function
-void display()
-{
-    SquareAnimation.display();
-}
-
-// timer callback function for animation
-void update(int value)
-{
-    SquareAnimation.update(value);
+    SquareAnimation *instance = static_cast<SquareAnimation *>(glutGetWindow());
+    if (instance)
+    {
+        instance->update();
+        glutTimerFunc(30, updateWrapper, 0)
+    }
+    squareAnimation.display();
 }
 
-// timer callback function for animation
-void update(int value)
+SquareAnimation *createSquareAnimation()
 {
-    SquareAnimation.update(value);
+    return new SquareAnimation(0, 0, 30, 1.0f);
 }
 
 int main(int argc, char **argv)
@@ -86,11 +99,14 @@ int main(int argc, char **argv)
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Pulse Effect Square Animation (Matrix Transformation)");
-    SquareAnimation.initialize(); // initialize opengl
+
+    SquareAnimation *squareAnimation = createSquareAnimation();
+    glutSetWindow(squareAnimation);
+    squareAnimation->initialize(); // initialize opengl
 
     glutDisplayFunc(display);
-    glutTimerFunc(0, update, 0);
+    glutTimerFunc(0, SquareAnimation::updateWrapper, 0);
 
     glutMainLoop();
-    return 0;
+    delete squareAnimation;
 }

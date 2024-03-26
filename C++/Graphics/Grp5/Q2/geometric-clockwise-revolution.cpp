@@ -33,17 +33,19 @@ public:
     }
 
     // function to update the animation
-    void update(int value)
+    static void update(int value)
     {
-        // update angle
-        angle += speed;
-        if (angle >= 360.0f)
+
+        SquareAnimation *animation = reinterpret_cast<SquareAnimation *>(value);
+        // update speed
+        animation->angle += animation->speed;
+        if (animation->angle >= 360.0f)
         {
             // ensure angle is within 0 to 360 range
-            angle -= 360.0f;
+            animation->angle -= 360.0f;
         }
         glutPostRedisplay();
-        glutTimerFunc(30, update, 0) // recursive animation call
+        glutTimerFunc(30, update, 0); // recursive animation call
     }
 
     void display()
@@ -60,22 +62,28 @@ public:
         drawSquare(0, 0);
         glFlush();
     }
-}
+
+    void startAnimation()
+    {
+        glutTimerFunc(30, update, reinterpret_cast<int>(this));
+    }
+};
 
 // initialize SquareAnimation object 'squareAnimation'
-SquareAnimation(0, 0, 30, 1.0f);
+// SquareAnimation (0, 0, 30, 1.0f);
 
 // display callback function
-void display()
-{
-    SquareAnimation.display();
-}
+// void
+// display()
+// {
+//     SquareAnimation.display();
+// }
 
 // timer callback function for animation
-void update(int value)
-{
-    SquareAnimation.update(value);
-}
+// void update(int value)
+// {
+//     SquareAnimation.update(value);
+// }
 
 int main(int argc, char **argv)
 {
@@ -84,7 +92,10 @@ int main(int argc, char **argv)
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Square Animation (Geometric Transformation)");
-    SquareAnimation.init();      // initialize opengl
+    SquareAnimation squareAnimation(0, 0, 30, 1.0f);
+    squareAnimation.startAnimation();
+    glutSetWindow(&squareAnimation);
+    squareAnimation.init();      // initialize opengl
     glutDisplayFunc(display);    // set display callback function
     glutTimerFunc(0, update, 0); // immediately start animation timer
     glutMainLoop();              // enter glut event processing loop
