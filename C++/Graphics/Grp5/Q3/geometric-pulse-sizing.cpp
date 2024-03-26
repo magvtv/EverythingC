@@ -32,7 +32,7 @@ public:
         glEnd();
     }
 
-    void update(int value)
+    static void update(int value)
     {
         angle += speed;
         if (angle >= 360.0f)
@@ -47,13 +47,15 @@ public:
             pulseFactor = 1.0f - (angle / 360.0f) * 0.5f;
         }
 
-        glutPostRedisplay();          // request a redraw
-        glutTimerFunc(30, update, 0); // recursive call animation
+        glutPostRedisplay();              // request a redraw
+        glutTimerFunc(30, update, value); // recursive call animation
     }
 
-    void display()
+    static void display()
     {
         glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
         float newX = centerX + radius * cos(angle * (M_PI / 180.0f));
         float newY = centerY + radius * sin(angle * (M_PI / 180.0f));
@@ -61,48 +63,20 @@ public:
         drawSquare(newX, newY); // draw the scaled square at the new position
         glFlush();
     }
-
-    void display()
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
-        glTranslatef(centerX, centerY, 0.0f);
-        glRotatef(angle, 0.0f, 0.0f, 1.0f);
-        glTranslatef(radius, 0.0f, 0.0f);
-
-        drawSquare();
-        glFlush();
-    }
-}
-
-// initialize SquareAnimation object 'squareAnimation'
-SquareAnimation SquareAnimation(0, 0, 30, 1.0f);
-
-// display callback function
-void display()
-{
-    SquareAnimation.display();
-}
-
-// timer callback function for animation
-void update(int value)
-{
-    SquareAnimation.update(value);
-}
+};
 
 int main(int argc, char **argv)
 {
+    SquareAnimation squareAnimation;
     glutInit(&argc, argv); // initialize glut
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Pulse Effect Square Animation (Geometric Transformation)");
-    SquareAnimation.initialize(); // initialize opengl
+    squareAnimation.initialize(); // initialize opengl
 
-    glutDisplayFunc(display);
-    glutTimerFunc(0, update, 0);
+    glutDisplayFunc(squareAnimation.display);
+    glutTimerFunc(0, squareAnimation.update, 0);
 
     glutMainLoop();
     return 0;

@@ -76,8 +76,6 @@ public:
     }
 };
 
-float OpenGLAnimation::angle = 0.0f;
-
 int main(int argc, char **argv)
 {
     OpenGLAnimation animation;
